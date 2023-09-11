@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/circular_icon_button.dart';
+import '../widgets/home/all_category_card.dart';
+import '../widgets/home/section_header.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -62,9 +64,30 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 16),
             const HomeSlider(),
+            SectionHeader(
+              title: "All Categories",
+              onTap: () {},
+            ),
+            SizedBox(
+              height: 90,
+              child: ListView.builder(
+                itemCount: 10,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return const AllCategoryCard();
+                },
+              ),
+            ),
+            const SizedBox(height: 16),
+            SectionHeader(
+              title: "Popular",
+              onTap: () {},
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+
