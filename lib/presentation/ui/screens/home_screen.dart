@@ -1,7 +1,9 @@
+import 'package:ecommerce_with_flutter/presentation/ui/screens/allcategory_list_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/utility/image_assets.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/widgets/home/home_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 import '../widgets/circular_icon_button.dart';
 import '../widgets/home/all_category_card.dart';
@@ -67,7 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
             const HomeSlider(),
             SectionHeader(
               title: "All Categories",
-              onTap: () {},
+              onTap: () {
+                Get.to(
+                  const AllCategoryListScreen(),
+                );
+              },
             ),
             SizedBox(
               height: 90,
@@ -90,8 +96,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.horizontal,
                 itemCount: 20,
                 itemBuilder: (context, index) {
-                return const ProductCard();
-              },),
+                  return const ProductCard();
+                },
+              ),
             ),
             const SizedBox(height: 16),
             SectionHeader(
@@ -105,7 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: 20,
                 itemBuilder: (context, index) {
                   return const ProductCard();
-                },),
+                },
+              ),
             ),
             const SizedBox(height: 16),
             SectionHeader(
@@ -119,7 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: 20,
                 itemBuilder: (context, index) {
                   return const ProductCard();
-                },),
+                },
+              ),
             ),
           ],
         ),
