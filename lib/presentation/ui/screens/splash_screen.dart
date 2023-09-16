@@ -1,5 +1,4 @@
-import 'package:ecommerce_with_flutter/presentation/ui/screens/auth/email_verification_screen.dart';
-import 'package:ecommerce_with_flutter/presentation/ui/screens/home_screen.dart';
+import 'package:ecommerce_with_flutter/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -22,8 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void goToNextScreen() {
     Future.delayed(const Duration(seconds: 3)).then((value) {
-      Get.offAll(const HomeScreen());
-      // Get.offAll(const EmailVerificationScreen());
+      Get.offAll(const MainBottomNavScreen());
     });
   }
 
