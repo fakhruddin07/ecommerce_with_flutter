@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/circular_icon_button.dart';
 import '../widgets/home/all_category_card.dart';
+import '../widgets/home/product_card.dart';
 import '../widgets/home/section_header.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -83,11 +84,46 @@ class _HomeScreenState extends State<HomeScreen> {
               title: "Popular",
               onTap: () {},
             ),
+            SizedBox(
+              height: 165,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                return const ProductCard();
+              },),
+            ),
+            const SizedBox(height: 16),
+            SectionHeader(
+              title: "Special",
+              onTap: () {},
+            ),
+            SizedBox(
+              height: 165,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  return const ProductCard();
+                },),
+            ),
+            const SizedBox(height: 16),
+            SectionHeader(
+              title: "New",
+              onTap: () {},
+            ),
+            SizedBox(
+              height: 165,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  return const ProductCard();
+                },),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-
