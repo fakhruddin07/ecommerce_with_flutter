@@ -1,4 +1,5 @@
 import 'package:ecommerce_with_flutter/presentation/ui/screens/allcategory_list_screen.dart';
+import 'package:ecommerce_with_flutter/presentation/ui/screens/product_list_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/utility/image_assets.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/widgets/home/home_slider.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 16),
             SectionHeader(
               title: "Popular",
-              onTap: () {},
+              onTap: () {
+                Get.to(const ProductListScreen());
+              },
             ),
             SizedBox(
               height: 165,
@@ -103,7 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 16),
             SectionHeader(
               title: "Special",
-              onTap: () {},
+              onTap: () {
+                Get.to(const ProductListScreen());
+              },
             ),
             SizedBox(
               height: 165,
@@ -118,7 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 16),
             SectionHeader(
               title: "New",
-              onTap: () {},
+              onTap: () {
+                Get.to(const ProductListScreen());
+              },
             ),
             SizedBox(
               height: 165,

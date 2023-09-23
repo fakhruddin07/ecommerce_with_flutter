@@ -1,4 +1,6 @@
+import 'package:ecommerce_with_flutter/presentation/ui/screens/allcategory_list_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/screens/home_screen.dart';
+import 'package:ecommerce_with_flutter/presentation/ui/screens/wish_list_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/utility/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +15,9 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   int _selectedIndex = 0;
   final List<Widget> _screen = const [
     HomeScreen(),
+    AllCategoryListScreen(),
     HomeScreen(),
-    HomeScreen(),
-    HomeScreen(),
+    WishListScreen(),
   ];
 
   @override
