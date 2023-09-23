@@ -1,4 +1,3 @@
-import 'package:ecommerce_with_flutter/presentation/ui/screens/allcategory_list_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/screens/product_list_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/utility/image_assets.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/widgets/home/home_slider.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../state_holders/main_bottom_nav_controller.dart';
 import '../widgets/circular_icon_button.dart';
 import '../widgets/home/all_category_card.dart';
 import '../widgets/home/product_card.dart';
@@ -71,9 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SectionHeader(
               title: "All Categories",
               onTap: () {
-                Get.to(
-                  const AllCategoryListScreen(),
-                );
+                Get.find<MainBottomNavController>().changeIndex(1);
               },
             ),
             SizedBox(
