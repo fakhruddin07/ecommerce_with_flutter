@@ -1,5 +1,6 @@
 import 'package:ecommerce_with_flutter/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/screens/allcategory_list_screen.dart';
+import 'package:ecommerce_with_flutter/presentation/ui/screens/cart_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/screens/home_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/screens/wish_list_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/utility/app_colors.dart';
@@ -18,7 +19,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   final List<Widget> _screen = const [
     HomeScreen(),
     AllCategoryListScreen(),
-    HomeScreen(),
+    CartScreen(),
     WishListScreen(),
   ];
 
