@@ -1,3 +1,4 @@
+import 'package:ecommerce_with_flutter/presentation/state_holders/email_verification_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/screens/auth/otp_verification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -66,14 +67,22 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_globalKey.currentState!.validate()) {
-                        Get.to(const OtpVerificationScreen());
-                      }
-                    },
-                    child: const Text("Next"),
-                  ),
+                  child: GetBuilder<EmailVerificationController>(
+                      builder: (controller) {
+                    if (controller.emailVerificationInProgress) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ElevatedButton(
+                      onPressed: () async {
+                        if (_globalKey.currentState!.validate()) {
+                          verifyEmail(controller);
+                        }
+                      },
+                      child: const Text("Next"),
+                    );
+                  }),
                 ),
               ],
             ),
@@ -81,5 +90,21 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> verifyEmail(EmailVerificationController controller) async {
+    final response =
+        await controller.verifyEmail(_emailTEController.text.trim());
+    if (response) {
+      Get.to(() => const OtpVerificationScreen());
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Email verification failed! Try again"),
+          ),
+        );
+      }
+    }
   }
 }
