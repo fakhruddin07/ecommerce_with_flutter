@@ -1,3 +1,4 @@
+import 'package:ecommerce_with_flutter/data/models/product.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,8 +7,9 @@ import '../../utility/app_colors.dart';
 import '../../utility/image_assets.dart';
 
 class ProductCard extends StatelessWidget {
+  final Product product;
   const ProductCard({
-    super.key,
+    super.key, required this.product,
   });
 
   @override
@@ -35,32 +37,32 @@ class ProductCard extends StatelessWidget {
                     topLeft: Radius.circular(8),
                     topRight: Radius.circular(8),
                   ),
-                  image: const DecorationImage(
-                    image: AssetImage(ImageAssets.shoePng),
+                  image: DecorationImage(
+                    image: NetworkImage(product.image ?? ""),
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     Text(
-                      "Nike shoe AK50578923",
+                      product.title ?? "",
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                         overflow: TextOverflow.ellipsis,
                         color: Colors.blueGrey,
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "\$100",
-                          style: TextStyle(
+                          "\$${product.price ?? 0}",
+                          style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                             color: AppColors.primaryColor,
@@ -69,14 +71,14 @@ class ProductCard extends StatelessWidget {
                         Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.star,
                               size: 15,
                               color: Colors.amber,
                             ),
                             Text(
-                              "4.8",
-                              style: TextStyle(
+                              "${product.star ?? 0}",
+                              style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 color: Colors.blueGrey,
                                 fontSize: 12,
@@ -85,7 +87,7 @@ class ProductCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Card(
+                        const Card(
                           color: AppColors.primaryColor,
                           child: Padding(
                             padding: EdgeInsets.all(2.0),
