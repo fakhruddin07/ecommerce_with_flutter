@@ -82,7 +82,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     Get.to(
-                      const OtpVerificationScreen(),
+                      OtpVerificationScreen(email: '',),
                     );
                   },
                   child: const Text("Complete"),

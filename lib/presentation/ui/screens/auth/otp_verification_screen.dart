@@ -1,20 +1,24 @@
-import 'package:ecommerce_with_flutter/presentation/ui/screens/auth/complete_profile_screen.dart';
+import 'package:ecommerce_with_flutter/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/utility/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../../state_holders/otp_verification_controller.dart';
 import '../../utility/image_assets.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({super.key});
+  final String email;
+  const OtpVerificationScreen({super.key, required this.email});
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+  final TextEditingController _otpTEController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +52,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
               const SizedBox(height: 25),
               PinCodeTextField(
+                controller: _otpTEController,
                 length: 4,
                 obscureText: false,
                 animationType: AnimationType.fade,
@@ -77,11 +82,18 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.offAll(const CompleteProfileScreen());
-                  },
-                  child: const Text("Next"),
+                child: GetBuilder<OtpVerificationController>(
+                    builder: (controller) {
+                      if(controller.otpVerificationInProgress){
+                        return const Center(child: CircularProgressIndicator(),);
+                      }
+                      return ElevatedButton(
+                        onPressed: () {
+                          verifyOtp(controller);
+                        },
+                        child: const Text("Next"),
+                      );
+                    }
                 ),
               ),
               const SizedBox(height: 24),
@@ -101,16 +113,33 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.grey,
-                ),
-                child: const Text("Resend Code"),
-              )
+                    onPressed: () {
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.grey,
+                    ),
+                    child: const Text("Resend Code"),
+                  ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> verifyOtp(OtpVerificationController controller) async {
+    final response =
+    await controller.verifyOtp(widget.email, _otpTEController.text.trim());
+    if (response) {
+      Get.offAll(() => const MainBottomNavScreen());
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Otp verification failed! Try again"),
+          ),
+        );
+      }
+    }
   }
 }

@@ -17,6 +17,7 @@ class EmailVerificationScreen extends StatefulWidget {
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +97,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     final response =
         await controller.verifyEmail(_emailTEController.text.trim());
     if (response) {
-      Get.to(() => const OtpVerificationScreen());
+      Get.to(() => OtpVerificationScreen(email: _emailTEController.text.trim(),));
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
