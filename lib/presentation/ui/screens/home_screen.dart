@@ -1,3 +1,4 @@
+import 'package:ecommerce_with_flutter/presentation/state_holders/category_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/screens/product_list_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/utility/image_assets.dart';
@@ -91,13 +92,24 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(
               height: 90,
-              child: ListView.builder(
-                itemCount: 10,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return const AllCategoryCard();
-                },
-              ),
+              child:
+                  GetBuilder<CategoryController>(builder: (categoryController) {
+                if (categoryController.getCategoriesInProgress) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return ListView.builder(
+                  itemCount: categoryController.categoryModel.data?.length ?? 0,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return AllCategoryCard(
+                      categoryData:
+                          categoryController.categoryModel.data![index],
+                    );
+                  },
+                );
+              }),
             ),
             const SizedBox(height: 16),
             SectionHeader(

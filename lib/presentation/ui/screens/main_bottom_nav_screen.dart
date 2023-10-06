@@ -1,3 +1,4 @@
+import 'package:ecommerce_with_flutter/presentation/state_holders/category_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/screens/allcategory_list_screen.dart';
@@ -28,6 +29,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   void initState() {
     WidgetsBinding.instance.addPersistentFrameCallback((_) {
       Get.find<HomeSlidersController>().getHomeSliders();
+      Get.find<CategoryController>().getCategories();
     });
     super.initState();
   }
