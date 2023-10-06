@@ -1,3 +1,4 @@
+import 'package:ecommerce_with_flutter/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/screens/product_list_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/utility/image_assets.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/widgets/home/home_slider.dart';
@@ -67,7 +68,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   )),
             ),
             const SizedBox(height: 16),
-            const HomeSlider(),
+            GetBuilder<HomeSlidersController>(
+              builder: (homeSlidersController) {
+                if (homeSlidersController.getHomeSlidersInProgress) {
+                  return const SizedBox(
+                    height: 180,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                return HomeSlider(
+                  sliders: homeSlidersController.sliderModel.data ?? [],
+                );
+              },
+            ),
             SectionHeader(
               title: "All Categories",
               onTap: () {
