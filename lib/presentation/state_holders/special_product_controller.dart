@@ -4,30 +4,30 @@ import 'package:ecommerce_with_flutter/data/services/network_caller.dart';
 import 'package:ecommerce_with_flutter/data/utility/urls.dart';
 import 'package:get/get.dart';
 
-class ProductController extends GetxController {
-  bool _getPopularProductsInProgress = false;
-  ProductModel _popularProductModel = ProductModel();
+class SpecialProductController extends GetxController {
+  bool _getSpecialProductsInProgress = false;
+  ProductModel _specialProductModel = ProductModel();
   String _errorMessage = "";
 
-  bool get getPopularProductsInProgress => _getPopularProductsInProgress;
-  ProductModel get popularProductModel => _popularProductModel;
+  bool get getSpecialProductsInProgress => _getSpecialProductsInProgress;
+  ProductModel get specialProductModel => _specialProductModel;
   String get errorMessage => _errorMessage;
 
-  Future<bool> getPopularProduct() async {
-    _getPopularProductsInProgress = true;
+  Future<bool> getSpecialProduct() async {
+    _getSpecialProductsInProgress = true;
     update();
 
     final NetworkResponse response = await NetworkCaller().getRequest(
-      Urls.getProductsByRemark("popular"),
+      Urls.getProductsByRemark("special"),
     );
-    _getPopularProductsInProgress = false;
+    _getSpecialProductsInProgress = false;
 
     if (response.isSuccess) {
-      _popularProductModel = ProductModel.fromJson(response.responseJson ?? {});
+      _specialProductModel = ProductModel.fromJson(response.responseJson ?? {});
       update();
       return true;
     } else {
-      _errorMessage = "Popular product fetch failed! Try again";
+      _errorMessage = "Special product fetch failed! Try again";
       update();
       return false;
     }

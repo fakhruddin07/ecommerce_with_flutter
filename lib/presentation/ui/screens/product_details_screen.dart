@@ -1,26 +1,23 @@
+import 'package:ecommerce_with_flutter/data/models/product_details.dart';
+import 'package:ecommerce_with_flutter/presentation/state_holders/product_details_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/widgets/custom_stepper.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/widgets/home/product_image_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../utility/app_colors.dart';
 import '../widgets/size_picker.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  final int productId;
+  const ProductDetailsScreen({super.key, required this.productId});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  List<Color> colors = [
-    Colors.black,
-    Colors.pink,
-    Colors.yellow,
-    Colors.blue,
-    Colors.amber,
-    Colors.deepOrange,
-  ];
+  List<Color> colors = [];
 
   List<String> sizes = ["S", "M", "L", "XL", "XXL", "XXXL"];
 
@@ -28,184 +25,211 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int _selectedSizeIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<ProductDetailsController>().getProductDetails(widget.productId);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        const ProductImageSlider(),
-                        productDetailsAppBar,
-                      ],
-                    ),
-                    productDetails,
-                  ],
+      body: GetBuilder<ProductDetailsController>(
+          builder: (productDetailsController) {
+        if (productDetailsController.getProductDetailsInProgress) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          ProductImageSlider(
+                            imageList: [
+                              productDetailsController.productDetails.img1 ??
+                                  "",
+                              productDetailsController.productDetails.img2 ??
+                                  "",
+                              productDetailsController.productDetails.img3 ??
+                                  "",
+                              productDetailsController.productDetails.img4 ??
+                                  "",
+                            ],
+                          ),
+                          productDetailsAppBar,
+                        ],
+                      ),
+                      productDetails(
+                        productDetailsController.productDetails,
+                        productDetailsController.availableColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            addToCartBottomContainer,
-          ],
-        ),
-      ),
+              addToCartBottomContainer,
+            ],
+          ),
+        );
+      }),
     );
   }
 
-  Padding get productDetails {
+  Padding productDetails(ProductDetails productDetails, List<String> colors) {
     return Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                "Adidas Shoe HK-3421341451 - Black Edition",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 18,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ),
-                            CustomStepper(
-                              lowerLimit: 1,
-                              upperLimit: 10,
-                              stepValue: 1,
-                              value: 1,
-                              onChange: (newValue) {
-                                print(newValue);
-                              },
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.star,
-                                  size: 18,
-                                  color: Colors.amber,
-                                ),
-                                Text(
-                                  "4.8",
-                                  style: TextStyle(
-                                    overflow: TextOverflow.ellipsis,
-                                    color: Colors.blueGrey,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                "Review",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryColor,
-                                ),
-                              ),
-                            ),
-                            const Card(
-                              color: AppColors.primaryColor,
-                              child: Padding(
-                                padding: EdgeInsets.all(2.0),
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  size: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        const Text(
-                          "Color",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        SizedBox(
-                          height: 28,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: colors.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                borderRadius: BorderRadius.circular(20),
-                                onTap: () {
-                                  _selectedColorIndex = index;
-                                  if (mounted) {
-                                    setState(() {});
-                                  }
-                                },
-                                child: CircleAvatar(
-                                  radius: 18,
-                                  backgroundColor: colors[index],
-                                  child: _selectedColorIndex == index
-                                      ? const Icon(
-                                          Icons.done,
-                                          color: Colors.white,
-                                        )
-                                      : null,
-                                ),
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const SizedBox(width: 8);
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          "Size",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        SizedBox(
-                          height: 28,
-                          child: SizePicker(
-                            sizes: sizes,
-                            onSelected: (int selectedSize) {
-                              _selectedSizeIndex = selectedSize;
-                            },
-                            initialSelected: 0,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          "Description",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                            ''' Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        '''),
-                      ],
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  productDetails.product?.title ?? "",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+              CustomStepper(
+                lowerLimit: 1,
+                upperLimit: 10,
+                stepValue: 1,
+                value: 1,
+                onChange: (newValue) {
+                  print(newValue);
+                },
+              )
+            ],
+          ),
+          Row(
+            children: [
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.star,
+                    size: 18,
+                    color: Colors.amber,
+                  ),
+                  Text(
+                    "${productDetails.product?.star ?? 0}",
+                    style: const TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      color: Colors.blueGrey,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
                     ),
-                  );
+                  ),
+                ],
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "Review",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+              ),
+              const Card(
+                color: AppColors.primaryColor,
+                child: Padding(
+                  padding: EdgeInsets.all(2.0),
+                  child: Icon(
+                    Icons.favorite_border,
+                    size: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              )
+            ],
+          ),
+          const Text(
+            "Color",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 28,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: colors.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () {
+                    _selectedColorIndex = index;
+                    if (mounted) {
+                      setState(() {});
+                    }
+                  },
+                  child: CircleAvatar(
+                    radius: 18,
+                    // backgroundColor: colors[index],
+                    child: _selectedColorIndex == index
+                        ? const Icon(
+                            Icons.done,
+                            color: Colors.white,
+                          )
+                        : null,
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(width: 8);
+              },
+            ),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            "Size",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 28,
+            child: SizePicker(
+              sizes: productDetails.size?.split(",") ?? [],
+              onSelected: (int selectedSize) {
+                _selectedSizeIndex = selectedSize;
+              },
+              initialSelected: 0,
+            ),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            "Description",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(productDetails.des ?? ""),
+        ],
+      ),
+    );
   }
 
   AppBar get productDetailsAppBar {

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../utility/app_colors.dart';
-import '../../utility/image_assets.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -17,7 +16,7 @@ class ProductCard extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: (){
-        Get.to(const ProductDetailsScreen());
+        Get.to(ProductDetailsScreen(productId: product.id!,));
       },
       child: Card(
         shape: RoundedRectangleBorder(
