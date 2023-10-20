@@ -17,7 +17,7 @@ class SpecialProductController extends GetxController {
     _getSpecialProductsInProgress = true;
     update();
 
-    final NetworkResponse response = await NetworkCaller().getRequest(
+    final NetworkResponse response = await NetworkCaller.getRequest(
       Urls.getProductsByRemark("special"),
     );
     _getSpecialProductsInProgress = false;

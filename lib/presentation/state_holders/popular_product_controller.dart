@@ -26,7 +26,7 @@ class PopularProductController extends GetxController {
     _getPopularProductsInProgress = true;
     update();
 
-    final NetworkResponse response = await NetworkCaller().getRequest(
+    final NetworkResponse response = await NetworkCaller.getRequest(
       Urls.getProductsByRemark("popular"),
     );
     _getPopularProductsInProgress = false;
@@ -46,7 +46,7 @@ class PopularProductController extends GetxController {
     _getSpecialProductsInProgress = true;
     update();
 
-    final NetworkResponse response = await NetworkCaller().getRequest(
+    final NetworkResponse response = await NetworkCaller.getRequest(
       Urls.getProductsByRemark("special"),
     );
     _getSpecialProductsInProgress = false;
@@ -66,7 +66,7 @@ class PopularProductController extends GetxController {
     _getNewProductsInProgress = true;
     update();
 
-    final NetworkResponse response = await NetworkCaller().getRequest(
+    final NetworkResponse response = await NetworkCaller.getRequest(
       Urls.getProductsByRemark("new"),
     );
     _getNewProductsInProgress = false;
