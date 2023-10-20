@@ -6,6 +6,7 @@ import 'package:ecommerce_with_flutter/presentation/state_holders/new_product_co
 import 'package:ecommerce_with_flutter/presentation/state_holders/otp_verification_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/popular_product_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/product_details_controller.dart';
+import 'package:ecommerce_with_flutter/presentation/state_holders/product_list_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/special_product_controller.dart';
 import 'package:get/get.dart';
 import '../presentation/state_holders/email_verification_controller.dart';
@@ -23,5 +24,6 @@ class StateHolderBinder extends Bindings{
     Get.put(NewProductController());
     Get.put(ProductDetailsController());
     Get.put(AddToCartController());
+    Get.put(ProductListController());
   }
 }

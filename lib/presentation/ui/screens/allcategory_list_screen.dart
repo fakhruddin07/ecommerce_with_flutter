@@ -1,5 +1,6 @@
 import 'package:ecommerce_with_flutter/presentation/state_holders/category_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/main_bottom_nav_controller.dart';
+import 'package:ecommerce_with_flutter/presentation/ui/screens/product_list_screen.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/widgets/home/all_category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,12 +41,13 @@ class _AllCategoryListScreenState extends State<AllCategoryListScreen> {
           ),
         ),
         body: RefreshIndicator(
-          onRefresh: () async{
+          onRefresh: () async {
             Get.find<CategoryController>().getCategories();
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: GetBuilder<CategoryController>(builder: (categoryController) {
+            child:
+                GetBuilder<CategoryController>(builder: (categoryController) {
               if (categoryController.getCategoriesInProgress) {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -54,11 +56,23 @@ class _AllCategoryListScreenState extends State<AllCategoryListScreen> {
               return GridView.builder(
                 itemCount: categoryController.categoryModel.data?.length ?? 0,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4, mainAxisSpacing: 16, crossAxisSpacing: 16,),
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                ),
                 itemBuilder: (context, index) {
                   return FittedBox(
                     child: AllCategoryCard(
-                      categoryData: categoryController.categoryModel.data![index],
+                      categoryData:
+                          categoryController.categoryModel.data![index],
+                      onTap: () {
+                        Get.to(
+                          ProductListScreen(
+                            categoryId: categoryController
+                                .categoryModel.data![index].id!,
+                          ),
+                        );
+                      },
                     ),
                   );
                 },

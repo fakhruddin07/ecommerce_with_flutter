@@ -5,41 +5,47 @@ import '../../utility/app_colors.dart';
 
 class AllCategoryCard extends StatelessWidget {
   final CategoryData categoryData;
+  final VoidCallback onTap;
   const AllCategoryCard({
     super.key,
     required this.categoryData,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        children: [
-          Container(
-            height: 60,
-            width: 60,
-            margin: const EdgeInsets.only(right: 8),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(8),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          children: [
+            Container(
+              height: 60,
+              width: 60,
+              margin: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Image.network(
+                categoryData.categoryImg ?? "",
+                height: 50,
+              ),
             ),
-            child: Image.network(
-              categoryData.categoryImg ?? "",
-              height: 50,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            categoryData.categoryName ?? "",
-            style: const TextStyle(
-              color: AppColors.primaryColor,
-              fontSize: 15,
-              letterSpacing: 0.5,
-            ),
-          )
-        ],
+            const SizedBox(height: 8),
+            Text(
+              categoryData.categoryName ?? "",
+              style: const TextStyle(
+                color: AppColors.primaryColor,
+                fontSize: 15,
+                letterSpacing: 0.5,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

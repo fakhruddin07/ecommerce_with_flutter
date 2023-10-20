@@ -109,6 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     return AllCategoryCard(
                       categoryData:
                           categoryController.categoryModel.data![index],
+                      onTap: () {
+                        Get.to(
+                          ProductListScreen(
+                            categoryId: categoryController
+                                .categoryModel.data![index].id!,
+                          ),
+                        );
+                      },
                     );
                   },
                 );
@@ -118,13 +126,13 @@ class _HomeScreenState extends State<HomeScreen> {
             SectionHeader(
               title: "Popular",
               onTap: () {
-                Get.to(const ProductListScreen());
+                // Get.to(const ProductListScreen());
               },
             ),
             SizedBox(
               height: 165,
-              child:
-                  GetBuilder<PopularProductController>(builder: (productController) {
+              child: GetBuilder<PopularProductController>(
+                  builder: (productController) {
                 if (productController.getPopularProductsInProgress) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -147,13 +155,13 @@ class _HomeScreenState extends State<HomeScreen> {
             SectionHeader(
               title: "Special",
               onTap: () {
-                Get.to(const ProductListScreen());
+                // Get.to(const ProductListScreen());
               },
             ),
             SizedBox(
               height: 165,
-              child:
-              GetBuilder<SpecialProductController>(builder: (productController) {
+              child: GetBuilder<SpecialProductController>(
+                  builder: (productController) {
                 if (productController.getSpecialProductsInProgress) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -162,11 +170,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount:
-                  productController.specialProductModel.data?.length ?? 0,
+                      productController.specialProductModel.data?.length ?? 0,
                   itemBuilder: (context, index) {
                     return ProductCard(
                       product:
-                      productController.specialProductModel.data![index],
+                          productController.specialProductModel.data![index],
                     );
                   },
                 );
@@ -176,13 +184,13 @@ class _HomeScreenState extends State<HomeScreen> {
             SectionHeader(
               title: "New",
               onTap: () {
-                Get.to(const ProductListScreen());
+                // Get.to(const ProductListScreen());
               },
             ),
             SizedBox(
               height: 165,
-              child:
-              GetBuilder<NewProductController>(builder: (productController) {
+              child: GetBuilder<NewProductController>(
+                  builder: (productController) {
                 if (productController.getNewProductsInProgress) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -191,11 +199,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount:
-                  productController.newProductModel.data?.length ?? 0,
+                      productController.newProductModel.data?.length ?? 0,
                   itemBuilder: (context, index) {
                     return ProductCard(
-                      product:
-                      productController.newProductModel.data![index],
+                      product: productController.newProductModel.data![index],
                     );
                   },
                 );
