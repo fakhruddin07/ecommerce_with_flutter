@@ -32,4 +32,9 @@ class ProductListController extends GetxController {
       return false;
     }
   }
+
+  void setProducts(ProductModel productModel){
+    _productModel = productModel;
+    update();
+  }
 }
