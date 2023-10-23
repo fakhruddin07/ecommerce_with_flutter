@@ -28,7 +28,7 @@ class AddToCartController extends GetxController {
     if(response.isSuccess){
       return true;
     }else{
-      _errorMessage = "Add to cat failed! Try again";
+      _errorMessage = "Add to cart failed! Try again";
       return false;
     }
   }

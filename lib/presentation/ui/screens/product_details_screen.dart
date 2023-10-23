@@ -19,9 +19,6 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  List<Color> colors = [];
-
-  List<String> sizes = ["S", "M", "L", "XL", "XXL", "XXXL"];
 
   int _selectedColorIndex = 0;
   int _selectedSizeIndex = 0;
@@ -306,7 +303,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     colors[_selectedColorIndex].toString(),
                     sizes[_selectedSizeIndex],
                   );
-
                   if (result) {
                     Get.snackbar(
                       "Added to Cart",
