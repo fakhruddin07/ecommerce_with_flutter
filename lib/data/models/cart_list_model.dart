@@ -36,7 +36,6 @@ class CartData {
   String? updatedAt;
   Product? product;
   int? quantity;
-  int numberOfItems = 1;
 
   CartData(
       {this.id,

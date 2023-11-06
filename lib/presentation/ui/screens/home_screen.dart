@@ -35,6 +35,17 @@ class _HomeScreenState extends State<HomeScreen> {
             SvgPicture.asset(ImageAssets.craftyBayNavLogoSvg),
             const Spacer(),
             CircularIconButton(
+              onTap: () {
+                if(Get.isDarkMode) {
+                  Get.changeThemeMode(ThemeMode.light);
+                }else{
+                  Get.changeThemeMode(ThemeMode.dark);
+                }
+              },
+              icon: Icons.light_mode_outlined,
+            ),
+            const SizedBox(width: 8),
+            CircularIconButton(
               onTap: () {},
               icon: Icons.person_2_outlined,
             ),

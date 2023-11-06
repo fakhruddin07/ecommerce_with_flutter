@@ -1,7 +1,6 @@
 import 'package:ecommerce_with_flutter/data/models/product_details.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/product_details_controller.dart';
-import 'package:ecommerce_with_flutter/presentation/ui/utility/color_extension.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/widgets/custom_stepper.dart';
 import 'package:ecommerce_with_flutter/presentation/ui/widgets/home/product_image_slider.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +18,9 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-
   int _selectedColorIndex = 0;
   int _selectedSizeIndex = 0;
+  int quantity = 1;
 
   @override
   void initState() {
@@ -109,7 +108,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 stepValue: 1,
                 value: 1,
                 onChange: (newValue) {
-                  print(newValue);
+                  quantity = newValue;
                 },
               )
             ],
@@ -170,33 +169,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           const SizedBox(height: 16),
           SizedBox(
             height: 28,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: colors.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () {
-                    _selectedColorIndex = index;
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
-                  child: CircleAvatar(
-                    radius: 18,
-                    backgroundColor: HexColor.fromHex(colors[index]),
-                    child: _selectedColorIndex == index
-                        ? const Icon(
-                            Icons.done,
-                            color: Colors.white,
-                          )
-                        : null,
-                  ),
-                );
+            child: SizePicker(
+              sizes: productDetails.color?.split(",") ?? [],
+              onSelected: (int selectedColor) {
+                _selectedColorIndex = selectedColor;
               },
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(width: 8);
-              },
+              initialSelected: 0,
             ),
           ),
           const SizedBox(height: 16),
@@ -289,31 +267,33 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
           SizedBox(
             width: 120,
-            child:
-                GetBuilder<AddToCartController>(builder: (addToCartController) {
-              if (addToCartController.addToCartInProgress) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return ElevatedButton(
-                onPressed: () async {
-                  final result = await addToCartController.addToCart(
-                    details.id!,
-                    colors[_selectedColorIndex].toString(),
-                    sizes[_selectedSizeIndex],
+            child: GetBuilder<AddToCartController>(
+              builder: (addToCartController) {
+                if (addToCartController.addToCartInProgress) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                  if (result) {
-                    Get.snackbar(
-                      "Added to Cart",
-                      "This product has been added to cart list",
-                      snackPosition: SnackPosition.BOTTOM,
+                }
+                return ElevatedButton(
+                  onPressed: () async {
+                    final result = await addToCartController.addToCart(
+                      details.id!,
+                      colors[_selectedColorIndex].toString(),
+                      sizes[_selectedSizeIndex],
+                      quantity,
                     );
-                  }
-                },
-                child: const Text("Add to Cart"),
-              );
-            }),
+                    if (result) {
+                      Get.snackbar(
+                        "Added to Cart",
+                        "This product has been added to cart list",
+                        snackPosition: SnackPosition.BOTTOM,
+                      );
+                    }
+                  },
+                  child: const Text("Add to Cart"),
+                );
+              },
+            ),
           ),
         ],
       ),

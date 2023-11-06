@@ -44,7 +44,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
               const SizedBox(height: 5),
               Text(
-                "A 4 Digit OTP Code has been Sent",
+                "A 6 Digit OTP Code has been Sent",
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium
@@ -53,7 +53,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               const SizedBox(height: 25),
               PinCodeTextField(
                 controller: _otpTEController,
-                length: 4,
+                length: 6,
                 obscureText: false,
                 animationType: AnimationType.fade,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

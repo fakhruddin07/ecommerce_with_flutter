@@ -18,7 +18,7 @@ class AuthController{
 
   static Future<void> clear() async{
     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
+    await sharedPreferences.clear();
   }
 
   static bool get isLoggedIn{
