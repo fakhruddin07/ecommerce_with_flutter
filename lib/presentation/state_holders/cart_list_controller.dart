@@ -34,6 +34,25 @@ class CartListController extends GetxController {
     }
   }
 
+  Future<bool> removeFromCart(int id) async {
+    _getCartListInProgress = true;
+    update();
+    final NetworkResponse response =
+        await NetworkCaller.getRequest(Urls.removeFromCart(id));
+
+    _getCartListInProgress = false;
+
+    if (response.isSuccess) {
+      _cartListModel.data?.removeWhere((element) => element.productId == id);
+      _calculateTotalPrice();
+      update();
+      return true;
+    } else {
+      _errorMessage = "remove from cart failed! Try again";
+      return false;
+    }
+  }
+
   void changeItem(int cardId, int noOfItems) {
     _cartListModel.data?.firstWhere((e) => e.id == cardId).quantity =
         noOfItems;
