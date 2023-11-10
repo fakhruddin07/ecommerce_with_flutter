@@ -88,7 +88,7 @@ class _CraftyBayState extends State<CraftyBay> {
         ),
       ),
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         primarySwatch:
             MaterialColor(AppColors.primaryColor.value, AppColors().color),
         elevatedButtonTheme: ElevatedButtonThemeData(

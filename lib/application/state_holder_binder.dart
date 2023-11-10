@@ -1,6 +1,7 @@
 import 'package:ecommerce_with_flutter/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/cart_list_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/category_controller.dart';
+import 'package:ecommerce_with_flutter/presentation/state_holders/create_invoice_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:ecommerce_with_flutter/presentation/state_holders/new_product_controller.dart';
@@ -27,5 +28,6 @@ class StateHolderBinder extends Bindings{
     Get.put(AddToCartController());
     Get.put(ProductListController());
     Get.put(CartListController());
+    Get.put(CreateInvoiceController());
   }
 }
